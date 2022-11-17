@@ -1,3 +1,14 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals"
+    // eslint 側で用意されている基本設定 https://eslint.org/docs/latest/rules/
+    // "eslint:recommended"
+  ],
+  // eslint カスタム
+  "root": true,
+  "rules": {
+    "indent": ["error", 2],
+    "quotes": ["error", "single"],
+    "max-len": ["error", { "code": 80, "ignoreComments": true }]
+  }
 }
