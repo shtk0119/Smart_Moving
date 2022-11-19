@@ -4,11 +4,12 @@ import {
   Box, 
   Button, 
   FormControl,
+  IconButton,
   InputAdornment, 
   TextField, 
   Typography 
 } from '@mui/material';
-import { Visibility } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const SignupForm = () => {
   const [nickname, setNickname] = React.useState<string>('');
@@ -50,10 +51,9 @@ const SignupForm = () => {
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
-                <Visibility
-                  sx={{ cursor: 'pointer' }}
-                  onClick={() => setIsShowPassword(!isShowPassword)}
-                />
+                <IconButton onClick={() => setIsShowPassword(!isShowPassword)}>
+                  {isShowPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
               </InputAdornment>
             ),
           }}
