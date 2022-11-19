@@ -15,7 +15,9 @@ const Footer = () => {
         fontWeight='bold'
         fontSize='24px'
       >
-        Smart Moving
+        <Link href='/'>
+          Smart Moving
+        </Link>
       </Typography>
 
       <Grid container justifyContent='center' marginTop='16px'>

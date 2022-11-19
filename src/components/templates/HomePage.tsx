@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import Header from '../organisms/homepage/Header';
+import Header from '../organisms/share/Header';
 import Main1 from '../organisms/homepage/Main1';
 import Main2 from '../organisms/homepage/Main2';
 import Footer from '../organisms/homepage/Footer';

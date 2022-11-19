@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Box, Typography } from '@mui/material';
 
 const Header = () => {
@@ -10,7 +11,9 @@ const Header = () => {
         width='1024px'
         m='0 auto'
       >
-        Smart Moving
+        <Link href='/'>
+          Smart Moving
+        </Link>
       </Typography>
     </Box>
   )
