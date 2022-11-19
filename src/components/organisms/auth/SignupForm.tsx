@@ -3,16 +3,18 @@ import Link from 'next/link';
 import { 
   Box, 
   Button, 
-  FormControl, 
-  Input, 
-  InputLabel, 
+  FormControl,
+  InputAdornment, 
+  TextField, 
   Typography 
 } from '@mui/material';
+import { Visibility } from '@mui/icons-material';
 
 const SignupForm = () => {
   const [nickname, setNickname] = React.useState<string>('');
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
+  const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false);
 
   return (
     <Box 
@@ -23,27 +25,38 @@ const SignupForm = () => {
       bgcolor='#d3d3d3'
     >
       <FormControl fullWidth sx={{ mt: 3 }}>
-        <InputLabel>Nickname</InputLabel>
-        <Input
+        <TextField
           type='text'
+          variant='outlined'
+          label='Nickname'
           onChange={(e) => setNickname(e.target.value)}
         />
       </FormControl>
-      
+
       <FormControl fullWidth sx={{ mt: 3 }}>
-        <InputLabel>Email</InputLabel>
-        <Input
+        <TextField
           type='email'
-          fullWidth
+          variant='outlined'
+          label='email'
           onChange={(e) => setEmail(e.target.value)}
         />
       </FormControl>
 
       <FormControl fullWidth sx={{ mt: 3 }}>
-        <InputLabel>Password</InputLabel>
-        <Input
-          type='password'
-          fullWidth
+        <TextField
+          type={isShowPassword ? 'text' : 'password'}
+          variant='outlined'
+          label='password'
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <Visibility
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => setIsShowPassword(!isShowPassword)}
+                />
+              </InputAdornment>
+            ),
+          }}
           onChange={(e) => setPassword(e.target.value)}
         />
       </FormControl>
