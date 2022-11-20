@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { 
   Box, 
   Button, 
@@ -10,11 +11,24 @@ import {
   Typography 
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { auth } from '../../../libs/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const LoginForm = () => {
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
   const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false);
+  const router = useRouter();
+
+  const onClickLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        router.push('/dashboards/tasks');
+      })
+      .catch((error) => {
+        alert(error.message);
+      })
+  }
 
   return (
     <Box 
@@ -61,6 +75,7 @@ const LoginForm = () => {
           textTransform: 'none',
           mt: 6,
         }}
+        onClick={onClickLogin}
       >
         Login
       </Button>

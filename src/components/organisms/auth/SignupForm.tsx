@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { 
   Box, 
   Button, 
@@ -10,12 +11,31 @@ import {
   Typography 
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { auth, db } from '../../../libs/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 const SignupForm = () => {
   const [nickname, setNickname] = React.useState<string>('');
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
   const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false);
+  const router = useRouter();
+
+  const onClickSignup = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        setDoc(doc(db, 'users', userCredential.user.uid), {
+          nickname: nickname,
+          email: email,
+          password: password,
+        });
+        router.push('/dashboards/tasks');
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
 
   return (
     <Box 
@@ -71,6 +91,7 @@ const SignupForm = () => {
           textTransform: 'none',
           mt: 6,
         }}
+        onClick={onClickSignup}
       >
         Sign up
       </Button>
@@ -81,7 +102,7 @@ const SignupForm = () => {
         </Link>
       </Typography>
     </Box>
-  )
-}
+  );
+};
 
 export default SignupForm;
