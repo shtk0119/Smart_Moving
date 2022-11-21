@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
-import { auth } from '../../src/libs/firebase';
+import { useFirebaseAuthContext } from '../../src/contexts/FirebaseAuthContext';
 
 const Tasks = () => {
   const router = useRouter();
+  const { user } = useFirebaseAuthContext();
+  const { logout } = useFirebaseAuthContext();
 
   const onClickLogout = () => {
-    signOut(auth);
-    router.push('/login')
-  }
+    logout;
+    router.push('/login');
+  };
 
   return (
     <>

@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { LoginFieldValues } from '../../../types/Auth';
+import { LoginFieldValues } from '../../../types/auth';
 import { auth } from '../../../libs/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import type { AppProps } from 'next/app';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { BarLoader } from 'react-spinners';
+import { FirebaseAuthContextProvider } from '../src/contexts/FirebaseAuthContext';
 import '../styles/globals.css';
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -26,13 +27,15 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       {isLoading && <BarLoader height={3} width={'100%'} color={'#36d7b7'} />}
-      <ThemeProvider theme={theme}>
-        <Head>
-          <title>Smart Moving</title>
-        </Head>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <FirebaseAuthContextProvider>
+        <ThemeProvider theme={theme}>
+          <Head>
+            <title>Smart Moving</title>
+          </Head>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </FirebaseAuthContextProvider>
     </>
   )
 }
