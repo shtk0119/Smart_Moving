@@ -6,9 +6,9 @@ const Sidebar = () => {
 
   return (
     <List 
-      component='nav' 
+      component='nav'
       sx={{
-        height: '100vh',
+        minHeight: '100vh',
         width: '88px',
         p: '64px 0 0',
         bgcolor: '#ffffff',
