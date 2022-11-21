@@ -11,17 +11,22 @@ import {
   Typography 
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { auth } from '../../../libs/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const LoginForm = () => {
-  const [email, setEmail] = React.useState<string>('');
-  const [password, setPassword] = React.useState<string>('');
   const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false);
   const router = useRouter();
+  
+  type FieldValues = {
+    email: string;
+    password: string;
+  }
 
-  const onClickLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
+  const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({});
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         router.push('/dashboards/tasks');
       })
@@ -37,13 +42,19 @@ const LoginForm = () => {
       m='42px auto 0'
       p={3} 
       bgcolor='#d3d3d3'
-    >      
+    >
       <FormControl fullWidth sx={{ mt: 3 }}>
         <TextField
           type='text'
           variant='outlined'
           label='email'
-          onChange={(e) => setEmail(e.target.value)}
+          autoComplete='off'
+          {...register(
+            'email', 
+            { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i }
+          )}
+          error={errors.email && true}
+          helperText={errors.email && 'Email is required'}
         />
       </FormControl>
 
@@ -61,7 +72,9 @@ const LoginForm = () => {
               </InputAdornment>
             ),
           }}
-          onChange={(e) => setPassword(e.target.value)}
+          {...register('password', { required: true })}
+          error={errors.password && true}
+          helperText={errors.password && 'Password is required'}
         />
       </FormControl>
 
@@ -75,7 +88,7 @@ const LoginForm = () => {
           textTransform: 'none',
           mt: 6,
         }}
-        onClick={onClickLogin}
+        onClick={handleSubmit(onSubmit)}
       >
         Login
       </Button>
