@@ -18,6 +18,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const LoginForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFieldValues>({});
+  const [error, setError] = React.useState<string | undefined>();
   const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false);
   const router = useRouter();
 
@@ -40,7 +41,7 @@ const LoginForm = () => {
         router.push('/dashboards/tasks');
       })
       .catch((error) => {
-        alert(error.message);
+        setError(error.code)
       })
   }
 
@@ -89,6 +90,9 @@ const LoginForm = () => {
           helperText={errors.password && errors.password.message}
         />
       </FormControl>
+
+      {/* Firebase からのエラーメッセージ表示 現在は、Firebase のメッセージをそのまま載せている。 */}
+      {error && <Typography fontSize='12px' color='#d32f2f' m='3px 14px 0'>{error}</Typography>}
 
       <Button
         type="button"
