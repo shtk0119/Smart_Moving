@@ -38,7 +38,7 @@ const LoginForm = () => {
   const onSubmit: SubmitHandler<LoginFieldValues> = (data) => {
     signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
-        router.push('/dashboards/tasks');
+        router.push('/dashboards/task');
       })
       .catch((error) => {
         setError(error.code)
