@@ -11,24 +11,44 @@ import {
   Typography 
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { SignupFieldValues } from '../../../types/Auth';
 import { auth, db } from '../../../libs/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
 const SignupForm = () => {
-  const [nickname, setNickname] = React.useState<string>('');
-  const [email, setEmail] = React.useState<string>('');
-  const [password, setPassword] = React.useState<string>('');
+  const { register, handleSubmit, formState: { errors } } = useForm<SignupFieldValues>({});
   const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false);
   const router = useRouter();
 
-  const onClickSignup = () => {
-    createUserWithEmailAndPassword(auth, email, password)
+  const validationRules = {
+    nickname: {
+      required: 'Nickname is required',
+    },
+    email: {
+      required: 'Email is required',
+      pattern: {
+        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+        message: 'Invalid email address',
+      },
+    },
+    password: {
+      required: 'Password is required',
+      minLength: {
+        value: 6,
+        message: 'Password must be more than 6 characters',
+      },
+    },
+  };
+
+  const onSubmit: SubmitHandler<SignupFieldValues> = (data) => {
+    createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         setDoc(doc(db, 'users', userCredential.user.uid), {
-          nickname: nickname,
-          email: email,
-          password: password,
+          nickname: data.nickname,
+          email: data.email,
+          password: data.password,
         });
         router.push('/dashboards/tasks');
       })
@@ -50,7 +70,13 @@ const SignupForm = () => {
           type='text'
           variant='outlined'
           label='Nickname'
-          onChange={(e) => setNickname(e.target.value)}
+          autoComplete='off'
+          {...register(
+            'nickname',
+            validationRules.nickname,
+          )}
+          error={errors.nickname && true}
+          helperText={errors.nickname && `${errors.nickname.message}`}
         />
       </FormControl>
 
@@ -59,7 +85,13 @@ const SignupForm = () => {
           type='email'
           variant='outlined'
           label='email'
-          onChange={(e) => setEmail(e.target.value)}
+          autoComplete='off'
+          {...register(
+            'email',
+            validationRules.email,
+          )}
+          error={errors.email && true}
+          helperText={errors.email && errors.email.message}
         />
       </FormControl>
 
@@ -77,7 +109,12 @@ const SignupForm = () => {
               </InputAdornment>
             ),
           }}
-          onChange={(e) => setPassword(e.target.value)}
+          {...register(
+            'password',
+            validationRules.password,
+          )}
+          error={errors.password && true}
+          helperText={errors.password && errors.password.message}
         />
       </FormControl>
 
@@ -91,7 +128,7 @@ const SignupForm = () => {
           textTransform: 'none',
           mt: 6,
         }}
-        onClick={onClickSignup}
+        onClick={handleSubmit(onSubmit)}
       >
         Sign up
       </Button>

@@ -12,20 +12,29 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { LoginFieldValues } from '../../../types/Auth';
 import { auth } from '../../../libs/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const LoginForm = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginFieldValues>({});
   const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false);
   const router = useRouter();
-  
-  type FieldValues = {
-    email: string;
-    password: string;
-  }
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({});
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const validationRules = {
+    email: {
+      required: 'Email is required',
+      pattern: {
+        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+        message: 'Invalid email address',
+      },
+    },
+    password: {
+      required: 'Password is required',
+    },
+  };
+
+  const onSubmit: SubmitHandler<LoginFieldValues> = (data) => {
     signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         router.push('/dashboards/tasks');
@@ -51,10 +60,10 @@ const LoginForm = () => {
           autoComplete='off'
           {...register(
             'email', 
-            { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i }
+            validationRules.email,
           )}
           error={errors.email && true}
-          helperText={errors.email && 'Email is required'}
+          helperText={errors.email && errors.email.message}
         />
       </FormControl>
 
@@ -72,9 +81,12 @@ const LoginForm = () => {
               </InputAdornment>
             ),
           }}
-          {...register('password', { required: true })}
+          {...register(
+            'password',
+            validationRules.password
+          )}
           error={errors.password && true}
-          helperText={errors.password && 'Password is required'}
+          helperText={errors.password && errors.password.message}
         />
       </FormControl>
 
