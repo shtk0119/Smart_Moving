@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { AppBar, IconButton, Toolbar } from '@mui/material';
-import { Menu } from '@mui/icons-material';
+import { AppBar, Toolbar, Typography } from '@mui/material';
 import Setting from '../../molecules/Setting';
 
 const Topbar = () => {
@@ -13,9 +12,9 @@ const Topbar = () => {
           justifyContent: 'space-between' 
         }}
       >
-        <IconButton color='inherit'>
-          <Menu />
-        </IconButton>
+        <Typography fontSize='24px' fontFamily='"Oleo Script", cursive' fontWeight='bold'>
+          Smart Moving
+        </Typography>
         <Setting />
       </Toolbar>
     </AppBar>
