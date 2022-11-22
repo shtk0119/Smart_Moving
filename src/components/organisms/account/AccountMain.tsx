@@ -157,7 +157,6 @@ const AccountMain = () => {
                   保存
                 </Button>
               </Box>
-
               <Box mt={5}>
                 <TextField
                   type='email'
@@ -177,10 +176,8 @@ const AccountMain = () => {
                   保存
                 </Button>
               </Box>
-
             </Box>
           </Box>
-
           <Box
             bgcolor="white"
             borderRadius={2}
