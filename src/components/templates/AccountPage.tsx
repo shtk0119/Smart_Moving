@@ -6,7 +6,7 @@ import AccountMain from '../organisms/account/AccountMain';
 
 const AccountPage = () => {
   return (
-    <Box display='flex' bgcolor='#f1f1f1'>
+    <Box display='flex' minHeight='100vh' bgcolor='#f1f1f1'>
       <Topbar />
       <Sidebar />
       <AccountMain />

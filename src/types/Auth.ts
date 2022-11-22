@@ -1,5 +1,5 @@
 
-export type SignupFieldValues = {
+export type UserFieldValues = {
   nickname: string;
   email: string;
   password: string;

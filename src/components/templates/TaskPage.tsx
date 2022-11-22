@@ -6,7 +6,7 @@ import TaskMain from '../organisms/task/TaskMain';
 
 const TaskPage = () => {
   return (
-    <Box display='flex' bgcolor='#f1f1f1'>
+    <Box display='flex' minHeight='100vh' bgcolor='#f1f1f1'>
       <Topbar />
       <Sidebar />
       <TaskMain />

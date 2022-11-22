@@ -12,13 +12,13 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { SignupFieldValues } from '../../../types/auth';
+import { UserFieldValues } from '../../../types/auth';
 import { auth, db } from '../../../libs/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
 const SignupForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<SignupFieldValues>({});
+  const { register, handleSubmit, formState: { errors } } = useForm<UserFieldValues>({});
   const [error, setError] = React.useState<string | undefined>();
   const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false);
   const router = useRouter();
@@ -43,7 +43,7 @@ const SignupForm = () => {
     },
   };
 
-  const onSubmit: SubmitHandler<SignupFieldValues> = (data) => {
+  const onSubmit: SubmitHandler<UserFieldValues> = (data) => {
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         updateProfile(userCredential.user, { displayName: data.nickname });
