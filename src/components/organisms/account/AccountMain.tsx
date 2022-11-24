@@ -1,15 +1,6 @@
 import * as React from 'react'
 import { useRouter } from 'next/router';
-import { 
-  Avatar, 
-  Box, 
-  Button, 
-  Divider, 
-  IconButton, 
-  InputAdornment, 
-  TextField, 
-  Typography 
-} from '@mui/material';
+import { Avatar, Box, Button, Divider, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useFirebaseAuthContext } from '../../../contexts/FirebaseAuthContext';
 import { db } from '../../../libs/firebase';
