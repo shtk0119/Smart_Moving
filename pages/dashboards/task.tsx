@@ -5,9 +5,9 @@ import TaskPage from '../../src/components/templates/TaskPage';
 const Tasks = () => {
   const { user } = useFirebaseAuthContext();
 
-  React.useEffect(() => {
-    console.log(user)
-  }, [user])
+  // React.useEffect(() => {
+  //   console.log(user)
+  // }, [user])
 
   return (
     <TaskPage />
