@@ -30,7 +30,6 @@ const Main1 = () => {
             <br/>
             引越しが Smart に管理できるアプリ！
           </Typography>
-
           <Box mt='32px'>
             <Link href='/signup'>
               <Button variant='contained'>はじめる！</Button>
