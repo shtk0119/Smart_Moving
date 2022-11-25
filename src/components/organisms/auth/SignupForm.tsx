@@ -1,21 +1,18 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { 
-  Box, 
-  Button, 
-  FormControl,
-  IconButton,
-  InputAdornment, 
-  TextField, 
-  Typography 
-} from '@mui/material';
+import { Box, Button, FormControl, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { UserFieldValues } from '../../../types/auth';
 import { auth, db } from '../../../libs/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
+
+type UserFieldValues = {
+  nickname: string;
+  email: string;
+  password: string;
+}
 
 const SignupForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<UserFieldValues>({});

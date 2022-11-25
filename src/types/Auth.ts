@@ -1,4 +1,3 @@
-
 export type UserFieldValues = {
   nickname: string;
   email: string;
