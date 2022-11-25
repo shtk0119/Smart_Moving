@@ -3,8 +3,9 @@ import { Box, Checkbox, Divider, IconButton, List, ListItem, ListItemText } from
 import { Add, Delete, FilterList } from '@mui/icons-material';
 import { db } from '../../../libs/firebase';
 import { useFirebaseAuthContext } from '../../../contexts/FirebaseAuthContext';
-import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, query, QueryDocumentSnapshot } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, onSnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
 import AddTaskModal from '../../molecules/AddTaskModal';
+import DetailTaskModal from '../../molecules/DetailTaskModal';
 
 const TaskMain = () => {
   const [isAdd, setIsAdd] = React.useState<boolean>(false);
@@ -44,20 +45,27 @@ const TaskMain = () => {
   };
 
   const onClickDeleteTask = () => {
-    deleteTaskIds.map((deleteTaskId) => {
-      deleteDoc(doc(db, 'tasks', deleteTaskId));
-    });
-    setDeleteTaskIds([]);
+    if (user) {
+      deleteTaskIds.map((deleteTaskId) => {
+        deleteDoc(doc(db, 'users', user.uid, 'tasks', deleteTaskId));
+      });
+      setDeleteTaskIds([]);
+    };
   };
 
   React.useEffect(() => {
     if (user) {
-      const docRef = getDocs(collection(db, 'users', user.uid, 'tasks'));
-      docRef.then((snapShot) => {
+      const userRef = collection(db, 'users', user.uid, 'tasks');
+
+      getDocs(userRef).then((snapShot) => {
         setTasks(snapShot.docs);
       });
-    }
-  }, [user])
+
+      onSnapshot(userRef, (snapShot) => {
+        setTasks(snapShot.docs);
+      });
+    };
+  }, [user]);
 
   return (
     <Box component='main' m='64px auto 32px'>
@@ -85,19 +93,21 @@ const TaskMain = () => {
                   checked={tasks?.length === deleteTaskIds.length}
                   onChange={(e) => isCheckedAllTasks(e)}
                 />
-                <ListItemText
-                  sx={{ ml: 1, minWidth: '250px', maxWidth: '300px' }}
-                >
+                <ListItemText>
                   タイトル
                 </ListItemText>
-                <ListItemText sx={{ ml: 1, maxWidth: '280px' }}>
+                <ListItemText sx={{ minWidth: '250px', maxWidth: '250px' }}>
                   カテゴリー
                 </ListItemText>
-                <ListItemText sx={{ maxWidth: '280px' }}>
+                <ListItemText sx={{ minWidth: '120px', maxWidth: '120px' }}>
                   ステータス
                 </ListItemText>
-                <ListItemText sx={{ maxWidth: '280px' }}>開始日</ListItemText>
-                <ListItemText sx={{ maxWidth: '280px' }}>終了日</ListItemText>
+                <ListItemText sx={{ minWidth: '120px', maxWidth: '120px' }}>
+                  開始日
+                </ListItemText>
+                <ListItemText sx={{ minWidth: '120px', maxWidth: '120px' }}>
+                  終了日
+                </ListItemText>
               </ListItem>
               <Divider />
               {tasks?.map((task: QueryDocumentSnapshot) => {
@@ -110,9 +120,6 @@ const TaskMain = () => {
                       />
                       <ListItemText
                         sx={{
-                          ml: 1,
-                          minWidth: '250px',
-                          maxWidth: '300px',
                           '& .MuiTypography-body1': {
                             display: 'inline',
                             '&:hover': { cursor: 'pointer', opacity: '0.6' },
@@ -122,22 +129,21 @@ const TaskMain = () => {
                       >
                         {task.data().title}
                       </ListItemText>
-                      <ListItemText sx={{ ml: 1, maxWidth: '280px' }}>
+                      <ListItemText sx={{ minWidth: '250px', maxWidth: '250px' }}>
                         {task.data().category}
                       </ListItemText>
-                      <ListItemText sx={{ maxWidth: '280px' }}>
+                      <ListItemText sx={{ minWidth: '120px', maxWidth: '120px' }}>
                         {task.data().status}
                       </ListItemText>
-                      <ListItemText sx={{ maxWidth: '280px' }}>
+                      <ListItemText sx={{ minWidth: '120px', maxWidth: '120px' }}>
                         {task.data().start_date}
                       </ListItemText>
-                      <ListItemText sx={{ maxWidth: '280px' }}>
+                      <ListItemText sx={{ minWidth: '120px', maxWidth: '120px' }}>
                         {task.data().end_date}
                       </ListItemText>
                     </ListItem>
                     <Divider />
-
-
+                    <DetailTaskModal isDetail={isDetail === task.id} setIsDetail={setIsDetail} task={task} />
                   </Box>
                 );
               })}

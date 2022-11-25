@@ -3,7 +3,7 @@ import { Box, Button, FormControl, IconButton, Input, InputLabel, MenuItem, Moda
 import { ArrowRightAlt, Close } from '@mui/icons-material';
 import { db } from '../../libs/firebase';
 import { useFirebaseAuthContext } from '../../contexts/FirebaseAuthContext';
-import { collection, doc, DocumentData, QueryDocumentSnapshot, updateDoc } from 'firebase/firestore';
+import { doc, DocumentData, QueryDocumentSnapshot, updateDoc } from 'firebase/firestore';
 
 type Props = {
   isDetail: boolean;
@@ -11,7 +11,7 @@ type Props = {
   task: QueryDocumentSnapshot;
 };
 
-export const DetailTaskModal = ({ isDetail, setIsDetail, task }: Props) => {
+const DetailTaskModal = ({ isDetail, setIsDetail, task }: Props) => {
   const [editTask, setEditTask] = React.useState<DocumentData>(task.data());
   const { user } = useFirebaseAuthContext();
 
@@ -19,25 +19,19 @@ export const DetailTaskModal = ({ isDetail, setIsDetail, task }: Props) => {
     setIsDetail(null);
   };
 
-  const onClickTaskSave = async () => {
-    const ref = doc(db, 'tasks', task.id);
-    await updateDoc(ref, {
-      title: editTask.title,
-      category: editTask.category,
-      status: editTask.status,
-      start_date: editTask.start_date,
-      end_date: editTask.end_date,
-      text: editTask.text,
-    });
-    handleClose();
-  };
-
-  const onClickTaskSave2 = () => {
+  const onClickTaskSave = () => {
     if (user) {
-      const docRef = doc(db, 'users', user.uid);
-
+      const docRef = doc(db, 'users', user.uid, 'tasks', task.id);
+      updateDoc(docRef, {
+        title: editTask.title,
+        category: editTask.category,
+        status: editTask.status,
+        start_date: editTask.start_date,
+        end_date: editTask.end_date,
+        text: editTask.text,
+      });
       handleClose();
-    }
+    };
   };
 
   return (
@@ -152,3 +146,5 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
+export default DetailTaskModal;
