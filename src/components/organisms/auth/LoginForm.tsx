@@ -4,9 +4,14 @@ import { useRouter } from 'next/router';
 import { Box, Button, FormControl, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { LoginFieldValues } from '../../../types/auth';
+// import { LoginFieldValues } from '../../../types/auth';
 import { auth } from '../../../libs/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+
+type LoginFieldValues = {
+  email: string;
+  password: string;
+}
 
 const LoginForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFieldValues>({});
