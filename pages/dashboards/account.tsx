@@ -1,4 +1,3 @@
-import React from 'react'
 import AccountPage from '../../src/components/templates/AccountPage';
 
 const Account = () => {
