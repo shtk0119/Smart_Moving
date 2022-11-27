@@ -18,3 +18,13 @@ a:hover {
 * {
   box-sizing: border-box;
 }
+
+/* 以下コードは、 GovernmentMain.tsx ファイルに記述のこと */
+.option_list {
+  background-color: white;
+}
+
+.option_list:hover {
+  background-color: #ffffffd0;
+  cursor: pointer;
+}
