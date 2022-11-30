@@ -1,40 +1,56 @@
 import * as React from 'react';
 import usePlacesAutocomplete, { getGeocode, getLatLng, LatLng } from 'use-places-autocomplete';
-import { Combobox, ComboboxInput, ComboboxList, ComboboxOption, ComboboxPopover } from '@reach/combobox';
+import { Combobox, ComboboxInput } from '@reach/combobox';
+import { Button } from '@mui/material';
 
-const PlacesAutocomplete = ({ map, setSelected }: { map: google.maps.Map | null, setSelected: React.Dispatch<React.SetStateAction<LatLng | null>>}) => {
-  const { ready, value, setValue, suggestions: { status, data }, clearSuggestions } = usePlacesAutocomplete({
+const PlacesAutocomplete = ({ map, setSelected }: { map: google.maps.Map | null, setSelected: React.Dispatch<React.SetStateAction<LatLng[] | null>>}) => {
+  const [address, setAddress] = React.useState<string>('');
+  const { ready } = usePlacesAutocomplete({
     requestOptions: {
-      types: ['city_hall'],
+      types: ['postal_code'],
       componentRestrictions: { country: 'jp' }
     }
   });
-  // Storageのキャッシュに検索履歴が残っている為、requestOptionsがうまく働いていない。
+  // Storageのキャッシュに検索履歴が残っている為、requestOptionsがうまく働かない為、キャッシュを削除。
   sessionStorage.removeItem('upa');
 
-  const handleSelect = async (address: string) => {
-    setValue(address, false);
-    clearSuggestions();
+  const handleClick = async () => {
     const results = await getGeocode({ address });
     const { lat, lng } = getLatLng(results[0]);
-    setSelected({ lat, lng });
     map?.panTo({ lat, lng });
+
+    const service = new google.maps.places.PlacesService(map);
+    // keyword で該当の市を絞り込む
+    let keyword = ''
+    for (let i=0; results[0].address_components.length > i; i++) {
+      if (results[0].address_components[i].long_name.match('市')) {
+        keyword = results[0].address_components[i].long_name;
+        break;
+      }
+    }
+    
+    const markerPoint = (results: any) => {
+      const array: [] = [];
+      results.map((data: any) => {
+        array.push(data.geometry.location)
+      });
+      setSelected(array);
+    };
+
+    service.nearbySearch({
+      location: results[0].geometry.location,
+      radius: 3000,
+      type: 'city_hall',
+      keyword: keyword,
+    }, markerPoint)
   }
 
   return (
-    <Combobox onSelect={handleSelect}>
-      <ComboboxInput value={value} onChange={(e) => setValue(e.target.value)} disabled={!ready} style={{ padding: '8px' }} />
-      <ComboboxPopover>
-        <ComboboxList style={{ listStyle: 'none', width: '300px' }}>
-          {status === 'OK' && data.map(({ place_id, description }) => (
-            <ComboboxOption 
-              key={place_id}
-              value={description}
-              className='option_list'
-            />
-          ))}
-        </ComboboxList>
-      </ComboboxPopover>
+    <Combobox>
+      <ComboboxInput value={address} onChange={(e) => setAddress(e.target.value)} disabled={!ready} placeholder='〒' style={{ padding: '8px' }} />
+      <Button variant='contained' sx={{ ml: 3 }} onClick={handleClick}>
+        検索
+      </Button>
     </Combobox>
   )
 }
