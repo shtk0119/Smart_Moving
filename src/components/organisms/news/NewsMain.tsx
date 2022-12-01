@@ -16,14 +16,15 @@ type NewsType = {
 
 const NewsMain = () => {
   const [news, setNews] = React.useState<Array<NewsType> | null>(null);
+  const url = fetch(`https://newsapi.org/v2/top-headlines?country=jp&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}`);
   
   React.useEffect(() => {
-    const url = fetch(`https://newsapi.org/v2/top-headlines?country=jp&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}`);
     url.then((res) => {
       res.json().then((result) => {
         setNews(result.articles);
       });
     });
+    console.log(news)
   }, []);
 
   return (
