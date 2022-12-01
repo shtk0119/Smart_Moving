@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ListItemButton, ListItemIcon, Typography } from '@mui/material';
-import { AddHome, Dashboard, Newspaper, Search } from '@mui/icons-material';
+import { AddHome, Dashboard, Search } from '@mui/icons-material';
 
 const MenuItems = (
   <>
@@ -28,15 +28,6 @@ const MenuItems = (
           <Search />
         </ListItemIcon>
         <Typography fontSize='12px' mt={1}>役所検索</Typography>
-      </ListItemButton>
-    </Link>
-
-    <Link href='/dashboards/news'>
-      <ListItemButton sx={{ flexDirection: 'column', p: '8px 0'}}>
-        <ListItemIcon sx={{ justifyContent: 'center' }}>
-          <Newspaper />
-        </ListItemIcon>
-        <Typography fontSize='12px' mt={1}>ニュース</Typography>
       </ListItemButton>
     </Link>
   </>
