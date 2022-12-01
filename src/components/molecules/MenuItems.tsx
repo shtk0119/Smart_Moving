@@ -31,12 +31,12 @@ const MenuItems = (
       </ListItemButton>
     </Link>
 
-    <Link href='#'>
+    <Link href='/dashboards/news'>
       <ListItemButton sx={{ flexDirection: 'column', p: '8px 0'}}>
         <ListItemIcon sx={{ justifyContent: 'center' }}>
           <Newspaper />
         </ListItemIcon>
-        <Typography fontSize='12px' mt={1}>お役立ち情報</Typography>
+        <Typography fontSize='12px' mt={1}>ニュース</Typography>
       </ListItemButton>
     </Link>
   </>
