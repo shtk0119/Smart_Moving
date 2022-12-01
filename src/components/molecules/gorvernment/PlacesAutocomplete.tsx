@@ -19,7 +19,8 @@ const PlacesAutocomplete = ({ map, setSelected }: { map: google.maps.Map | null,
     const { lat, lng } = getLatLng(results[0]);
     map?.panTo({ lat, lng });
 
-    const service = new google.maps.places.PlacesService(map);
+    const googleMap = new google.maps.Map(document.createElement('div'));
+    const service = new google.maps.places.PlacesService(googleMap);
     // keyword で該当の市を絞り込む
     let keyword = ''
     for (let i=0; results[0].address_components.length > i; i++) {
@@ -30,7 +31,7 @@ const PlacesAutocomplete = ({ map, setSelected }: { map: google.maps.Map | null,
     }
     
     const markerPoint = (results: any) => {
-      const array: [] = [];
+      const array: any = [];
       results.map((data: any) => {
         array.push(data.geometry.location)
       });
