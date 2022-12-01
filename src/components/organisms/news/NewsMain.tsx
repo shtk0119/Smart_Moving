@@ -16,15 +16,15 @@ type NewsType = {
 
 const NewsMain = () => {
   const [news, setNews] = React.useState<Array<NewsType> | null>(null);
-
+  
   React.useEffect(() => {
     const url = fetch(`https://newsapi.org/v2/top-headlines?country=jp&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}`);
     url.then((res) => {
       res.json().then((result) => {
-        setNews(result.articles)
+        setNews(result.articles);
       });
-    })
-  }, [])
+    });
+  }, []);
 
   return (
     <Box component='main' m='64px auto 32px'>
@@ -44,7 +44,7 @@ const NewsMain = () => {
                         <Typography fontWeight='bold'>{data.title}</Typography>
                       </Box>
                       {data.urlToImage &&
-                        <img src={data.urlToImage} height='80px' width='auto' />
+                        <img src={data.urlToImage} alt='画像' height='80px' width='auto' />
                         // next.js Imageコンポーネントでは、表示できなかった為、imgタグを使用。
                         // <Image src={data.urlToImage} alt='image' fill />
                       }
