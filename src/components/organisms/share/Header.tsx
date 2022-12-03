@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Box, styled, Typography } from '@mui/material';
 
 const Header = () => {
+  
   return (
     <Box component='header'>
       <HeaderLogo>

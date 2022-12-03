@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Box, List, ListItem, styled, Typography } from '@mui/material';
 
 const Footer = () => {
+  
   return (
     <FooterBox component='footer'>
       <FooterLogo>

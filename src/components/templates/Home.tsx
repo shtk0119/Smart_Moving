@@ -1,22 +1,18 @@
-import { Box, Divider } from '@mui/material';
-import Footer from '../organisms/home/Footer';
-import Main from '../organisms/home/Main';
+import { Box, Divider, styled } from '@mui/material';
 import Header from '../organisms/share/Header';
+import Main from '../organisms/home/Main';
+import Footer from '../organisms/home/Footer';
 
 const Home = () => {
+
   return (
-    <Box 
-      minHeight='100vh' 
-      pb='200px'
-      bgcolor='#f1f1f1' 
-      position='relative' 
-      boxSizing='border-box'
-    >
+    <Box>
       <Header />
       <Main />
       <Divider />
       <Footer />
     </Box>
+    
   )
 }
 
