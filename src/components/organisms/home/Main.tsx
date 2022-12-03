@@ -24,7 +24,9 @@ const Main = () => {
 
         <ButtonBox>
           <Link href='/signup'>
-            <Button variant='contained'>はじめる！</Button>
+            <Button variant='contained'>
+              はじめる！
+            </Button>
           </Link>
         </ButtonBox>
       </Box>
