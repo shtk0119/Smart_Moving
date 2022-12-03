@@ -6,9 +6,13 @@ const Footer = () => {
   return (
     <Box 
       component='footer'
+      height='200px'
+      width='100%'
       p={2}
       textAlign='center'
       bgcolor='#f1f1f1'
+      position='absolute'
+      bottom='0'
     >
       <Typography
         fontFamily='"Oleo Script", cursive' 

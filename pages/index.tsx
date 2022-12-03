@@ -1,6 +1,10 @@
 import { NextPage } from 'next';
-import HomePage from '../src/components/templates/HomePage';
+import Home from '../src/components/templates/Home';
 
-const Home: NextPage = () => <HomePage />
+const Index: NextPage = () => {
+  return (
+    <Home />
+  )
+}
 
-export default Home;
+export default Index;

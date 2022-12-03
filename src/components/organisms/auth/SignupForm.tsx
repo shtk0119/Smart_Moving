@@ -6,7 +6,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { auth, db } from '../../../libs/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, setDoc } from 'firebase/firestore';
 
 type UserFieldValues = {
   nickname: string;
@@ -49,12 +49,40 @@ const SignupForm = () => {
           email: data.email,
           password: data.password,
         });
-        router.push('/dashboards/task');
+        
+        // const array = [];
+        // const querySnapshot = collection(db, 'tasks');
+        // const documents = getDocs(querySnapshot);
+        // const response = documents.then((res) => {
+        //   return res.docs;
+        // })
+        // addDoc(doc(db, 'users', userCredential.user.uid, querySnapshot.id), {
+
+        // })
+
+        // router.push('/dashboards/task');
       })
       .catch((error) => {
         setError(error.code)
       });
   };
+
+  // const [a, setA] = React.useState();
+
+  // const onClick = () => {
+  //   const array = [];
+  //   const taskRef = collection(db, 'tasks');
+  //   getDocs(taskRef).then((snapShot) => {
+  //     setA(snapShot.docs)
+  //   })
+  //   // console.log(response);
+  //   // addDoc(doc(db, 'users', userCredential.user.uid, querySnapshot))
+
+  // }
+
+  // React.useEffect(() => {
+  //   console.log(a)
+  // }, [a])
 
   return (
     <Box 
@@ -131,6 +159,7 @@ const SignupForm = () => {
           mt: 6,
         }}
         onClick={handleSubmit(onSubmit)}
+        // onClick={onClick}
       >
         Sign up
       </Button>
