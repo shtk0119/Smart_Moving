@@ -1,7 +1,7 @@
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
+import Footer from '../organisms/home/Footer';
+import Main from '../organisms/home/Main';
 import Header from '../organisms/share/Header';
-import Main from '../organisms/homepage/Main';
-import Footer from '../organisms/homepage/Footer';
 
 const Home = () => {
   return (
@@ -14,6 +14,7 @@ const Home = () => {
     >
       <Header />
       <Main />
+      <Divider />
       <Footer />
     </Box>
   )
