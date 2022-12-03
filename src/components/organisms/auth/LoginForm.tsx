@@ -33,13 +33,24 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<LoginFieldValues> = (data) => {
     signInWithEmailAndPassword(auth, data.email, data.password)
-      .then((userCredential) => {
+      .then(() => {
         router.push('/dashboards/task');
       })
       .catch((error) => {
-        setError(error.code)
+        setError(error.code);
+      });
+  };
+
+  const onGuestLogin = () => {
+    const guest = {email: 'guest@guest.com', password: '123456789'};
+    signInWithEmailAndPassword(auth, guest.email, guest.password)
+      .then(() => {
+        router.push('/dashboards/task');
       })
-  }
+      .catch((error) => {
+        setError(error.code);
+      });
+  };
 
   return (
     <Box 
@@ -98,7 +109,22 @@ const LoginForm = () => {
           bgcolor: '#4299e1',
           fontWeight: 'bold',
           textTransform: 'none',
-          mt: 6,
+          mt: 5,
+        }}
+        onClick={onGuestLogin}
+      >
+        Guest Login
+      </Button>
+
+      <Button
+        type="button"
+        variant="contained"
+        fullWidth
+        sx={{
+          bgcolor: '#4299e1',
+          fontWeight: 'bold',
+          textTransform: 'none',
+          mt: 2,
         }}
         onClick={handleSubmit(onSubmit)}
       >
