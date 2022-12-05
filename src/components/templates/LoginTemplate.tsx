@@ -1,16 +1,16 @@
 import { Box } from '@mui/material';
 import Header from '../organisms/Header';
 import AuthTitle from '../organisms/auth/AuthTitle';
-import SignupForm from '../organisms/auth/SignupForm';
+import LoginForm from '../organisms/auth/LoginForm';
 
-const SignupTemplate = () => {
+const LoginTemplate = () => {
   return (
     <Box height='100vh'>
       <Header />
-      <AuthTitle value={'Sign up'} />
-      <SignupForm />
+      <AuthTitle value={'Login'} />
+      <LoginForm />
     </Box>
   )
 }
 
-export default SignupTemplate;
+export default LoginTemplate;

@@ -1,19 +1,15 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Box, Button, FormControl, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { Box, Button, FormControl, IconButton, InputAdornment, styled, TextField, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { UserType } from '../../../types/user';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { auth } from '../../../libs/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-type LoginFieldValues = {
-  email: string;
-  password: string;
-}
-
 const LoginForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFieldValues>({});
+  const { register, handleSubmit, formState: { errors } } = useForm<UserType>({});
   const [error, setError] = React.useState<string | undefined>();
   const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false);
   const router = useRouter();
@@ -31,7 +27,7 @@ const LoginForm = () => {
     },
   };
 
-  const onSubmit: SubmitHandler<LoginFieldValues> = (data) => {
+  const onSubmit: SubmitHandler<UserType> = (data) => {
     signInWithEmailAndPassword(auth, data.email, data.password)
       .then(() => {
         router.push('/dashboards/task');
@@ -41,6 +37,7 @@ const LoginForm = () => {
       });
   };
 
+  // ゲストログイン
   const onGuestLogin = () => {
     const guest = {email: 'guest@guest.com', password: '123456789'};
     signInWithEmailAndPassword(auth, guest.email, guest.password)
@@ -53,29 +50,23 @@ const LoginForm = () => {
   };
 
   return (
-    <Box 
-      width='360px'
-      borderRadius={3}
-      m='42px auto 0'
-      p={3} 
-      bgcolor='#d3d3d3'
-    >
-      <FormControl fullWidth sx={{ mt: 3 }}>
+    <FormBox>
+      <DefaultFormControl fullWidth>
         <TextField
-          type='text'
+          type='email'
           variant='outlined'
           label='email'
           autoComplete='off'
           {...register(
-            'email', 
+            'email',
             validationRules.email,
           )}
           error={errors.email && true}
           helperText={errors.email && errors.email.message}
         />
-      </FormControl>
+      </DefaultFormControl>
 
-      <FormControl fullWidth sx={{ mt: 3 }}>
+      <DefaultFormControl fullWidth>
         <TextField
           type={isShowPassword ? 'text' : 'password'}
           variant='outlined'
@@ -91,53 +82,78 @@ const LoginForm = () => {
           }}
           {...register(
             'password',
-            validationRules.password
+            validationRules.password,
           )}
           error={errors.password && true}
           helperText={errors.password && errors.password.message}
         />
-      </FormControl>
+      </DefaultFormControl>
 
       {/* Firebase からのエラーメッセージ表示 現在は、Firebase のメッセージをそのまま載せている。 */}
       {error && <Typography fontSize='12px' color='#d32f2f' m='3px 14px 0'>{error}</Typography>}
 
-      <Button
-        type="button"
-        variant="contained"
+      <GuestButton
+        type='button'
+        variant='contained'
         fullWidth
-        sx={{
-          bgcolor: '#4299e1',
-          fontWeight: 'bold',
-          textTransform: 'none',
-          mt: 5,
-        }}
         onClick={onGuestLogin}
       >
         Guest Login
-      </Button>
+      </GuestButton>
 
-      <Button
-        type="button"
-        variant="contained"
+      <SubmitButton
+        type='button'
+        variant='contained'
         fullWidth
-        sx={{
-          bgcolor: '#4299e1',
-          fontWeight: 'bold',
-          textTransform: 'none',
-          mt: 2,
-        }}
         onClick={handleSubmit(onSubmit)}
       >
         Login
-      </Button>
+      </SubmitButton>
 
-      <Typography fontSize='14px' color='primary' mt={3} textAlign='center'>
+      <LinkText color={'primary'}>
         <Link href='signup'>
           アカウントをお持ちでない方
         </Link>
-      </Typography>
-    </Box>
+      </LinkText>
+
+    </FormBox>
   )
 }
 
 export default LoginForm;
+
+const FormBox = styled(Box)(() => ({
+  backgroundColor: '#d3d3d3',
+  width: '360px',
+  padding: '16px',
+  margin: '0 auto',
+  borderRadius: '8px',
+  '@media screen and (max-width:425px)': {
+    width: '320px',
+  }
+}));
+
+const DefaultFormControl = styled(FormControl)(() => ({
+  marginTop: '24px'
+}));
+
+const SubmitButton = styled(Button)(() => ({
+  backgroundColor: '#4299e1',
+  fontWeight: 'bold',
+  textTransform: 'none',
+  marginTop: '24px',
+}));
+
+const LinkText = styled(Typography)(() => ({
+  fontSize: '14px',
+  textAlign: 'center',
+  marginTop: '24px',
+}));
+
+// ゲストログイン
+const GuestButton = styled(Button)(() => ({
+  backgroundColor: '#4299e1',
+  fontWeight: 'bold',
+  textTransform: 'none',
+  marginTop: '36px',
+}));

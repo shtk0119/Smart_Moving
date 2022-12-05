@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Button, FormControl, IconButton, InputAdornment, styled, TextField, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { UserType } from '../../types/user';
+import { UserType } from '../../../types/user';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { auth, db } from '../../libs/firebase';
+import { auth, db } from '../../../libs/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 

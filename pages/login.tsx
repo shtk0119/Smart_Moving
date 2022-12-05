@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import LoginPage from '../src/components/templates/LoginPage';
+import LoginTemplate from '../src/components/templates/LoginTemplate';
 
 const Login = () => {
   return (
@@ -9,7 +9,7 @@ const Login = () => {
           Smart Moving - Login
         </title>
       </Head>
-      <LoginPage />
+      <LoginTemplate />
     </>
   )
 }
