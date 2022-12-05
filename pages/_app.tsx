@@ -21,8 +21,8 @@ const App = ({ Component, pageProps }: AppProps) => {
       router.events.off('routeChangeStart', () => setIsLoading(true));
       router.events.off('routeChangeComplete', () => setIsLoading(false));
       router.events.off('routeChangeError', () => setIsLoading(false));
-    }
-  }, [router])
+    };
+  }, [router]);
 
   return (
     <>
@@ -37,7 +37,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         </ThemeProvider>
       </FirebaseAuthContextProvider>
     </>
-  )
-}
+  );
+};
 
 export default App;

@@ -11,7 +11,7 @@ const Login = () => {
       </Head>
       <LoginTemplate />
     </>
-  )
-}
+  );
+};
 
 export default Login;

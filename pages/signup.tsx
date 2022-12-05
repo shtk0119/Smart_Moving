@@ -11,7 +11,7 @@ const Signup = () => {
       </Head>
       <SignupTemplate />
     </>
-  )
-}
+  );
+};
 
 export default Signup;

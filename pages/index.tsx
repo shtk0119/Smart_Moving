@@ -4,7 +4,7 @@ import HomeTemplate from '../src/components/templates/HomeTemplate';
 const Home: NextPage = () => {
   return (
     <HomeTemplate />
-  )
-}
+  );
+};
 
 export default Home;
