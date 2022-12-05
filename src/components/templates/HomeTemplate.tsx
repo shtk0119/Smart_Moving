@@ -3,7 +3,7 @@ import Header from '../organisms/Header';
 import Main from '../organisms/Main';
 import Footer from '../organisms/Footer';
 
-const Home = () => {
+const HomeTemplate = () => {
 
   return (
     <Box>
@@ -15,4 +15,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default HomeTemplate;
