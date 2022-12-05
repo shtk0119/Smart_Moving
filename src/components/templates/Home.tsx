@@ -1,7 +1,7 @@
-import { Box, Divider, styled } from '@mui/material';
-import Header from '../organisms/share/Header';
-import Main from '../organisms/home/Main';
-import Footer from '../organisms/home/Footer';
+import { Box, Divider } from '@mui/material';
+import Header from '../organisms/Header';
+import Main from '../organisms/Main';
+import Footer from '../organisms/Footer';
 
 const Home = () => {
 

@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import Header from '../organisms/share/Header';
+import Header from '../organisms/Header';
 import LoginForm from '../organisms/auth/LoginForm';
 
 const LoginPage = () => {
