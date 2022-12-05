@@ -1,21 +1,16 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Box, Button, FormControl, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { Box, Button, FormControl, IconButton, InputAdornment, styled, TextField, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { UserType } from '../../types/user';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { auth, db } from '../../../libs/firebase';
+import { auth, db } from '../../libs/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { addDoc, collection, doc, getDocs, setDoc } from 'firebase/firestore';
-
-type UserFieldValues = {
-  nickname: string;
-  email: string;
-  password: string;
-}
+import { doc, setDoc } from 'firebase/firestore';
 
 const SignupForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<UserFieldValues>({});
+  const { register, handleSubmit, formState: { errors } } = useForm<UserType>({});
   const [error, setError] = React.useState<string | undefined>();
   const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false);
   const router = useRouter();
@@ -40,7 +35,7 @@ const SignupForm = () => {
     },
   };
 
-  const onSubmit: SubmitHandler<UserFieldValues> = (data) => {
+  const onSubmit: SubmitHandler<UserType> = (data) => {
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         updateProfile(userCredential.user, { displayName: data.nickname });
@@ -49,51 +44,17 @@ const SignupForm = () => {
           email: data.email,
           password: data.password,
         });
-        
-        // const array = [];
-        // const querySnapshot = collection(db, 'tasks');
-        // const documents = getDocs(querySnapshot);
-        // const response = documents.then((res) => {
-        //   return res.docs;
-        // })
-        // addDoc(doc(db, 'users', userCredential.user.uid, querySnapshot.id), {
-
-        // })
-
-        // router.push('/dashboards/task');
+        router.push('dashboards/task');
       })
       .catch((error) => {
         setError(error.code)
       });
   };
 
-  // const [a, setA] = React.useState();
-
-  // const onClick = () => {
-  //   const array = [];
-  //   const taskRef = collection(db, 'tasks');
-  //   getDocs(taskRef).then((snapShot) => {
-  //     setA(snapShot.docs)
-  //   })
-  //   // console.log(response);
-  //   // addDoc(doc(db, 'users', userCredential.user.uid, querySnapshot))
-
-  // }
-
-  // React.useEffect(() => {
-  //   console.log(a)
-  // }, [a])
-
   return (
-    <Box 
-      width='360px'
-      borderRadius={3}
-      m='42px auto 0'
-      p={3} 
-      bgcolor='#d3d3d3'
-    >
-      <FormControl fullWidth sx={{ mt: 3 }}>
-        <TextField
+    <FormBox>
+      <DefaultFormControl fullWidth>
+       <TextField
           type='text'
           variant='outlined'
           label='Nickname'
@@ -105,9 +66,9 @@ const SignupForm = () => {
           error={errors.nickname && true}
           helperText={errors.nickname && `${errors.nickname.message}`}
         />
-      </FormControl>
+      </DefaultFormControl>
 
-      <FormControl fullWidth sx={{ mt: 3 }}>
+      <DefaultFormControl fullWidth>
         <TextField
           type='email'
           variant='outlined'
@@ -120,9 +81,9 @@ const SignupForm = () => {
           error={errors.email && true}
           helperText={errors.email && errors.email.message}
         />
-      </FormControl>
+      </DefaultFormControl>
 
-      <FormControl fullWidth sx={{ mt: 3 }}>
+      <DefaultFormControl fullWidth>
         <TextField
           type={isShowPassword ? 'text' : 'password'}
           variant='outlined'
@@ -143,34 +104,56 @@ const SignupForm = () => {
           error={errors.password && true}
           helperText={errors.password && errors.password.message}
         />
-      </FormControl>
-      
+      </DefaultFormControl>
+
       {/* Firebase からのエラーメッセージ表示 現在は、Firebase のメッセージをそのまま載せている。 */}
       {error && <Typography fontSize='12px' color='#d32f2f' m='3px 14px 0'>{error}</Typography>}
 
-      <Button
-        type="button"
-        variant="contained"
+      <SubmitButton
+        type='button'
+        variant='contained'
         fullWidth
-        sx={{
-          bgcolor: '#4299e1',
-          fontWeight: 'bold',
-          textTransform: 'none',
-          mt: 6,
-        }}
         onClick={handleSubmit(onSubmit)}
         // onClick={onClick}
       >
         Sign up
-      </Button>
+      </SubmitButton>
 
-      <Typography fontSize='14px' color='primary' mt={3} textAlign='center'>
+      <LinkText color={'primary'}>
         <Link href='login'>
           アカウントをお持ちの方
         </Link>
-      </Typography>
-    </Box>
+      </LinkText>
+    </FormBox>
   );
 };
 
 export default SignupForm;
+
+const FormBox = styled(Box)(() => ({
+  backgroundColor: '#d3d3d3',
+  width: '360px',
+  padding: '16px',
+  margin: '0 auto',
+  borderRadius: '8px',
+  '@media screen and (max-width:425px)': {
+    width: '320px',
+  }
+}));
+
+const DefaultFormControl = styled(FormControl)(() => ({
+  marginTop: '24px'
+}));
+
+const SubmitButton = styled(Button)(() => ({
+  backgroundColor: '#4299e1',
+  fontWeight: 'bold',
+  textTransform: 'none',
+  marginTop: '24px',
+}));
+
+const LinkText = styled(Typography)(() => ({
+  fontSize: '14px',
+  textAlign: 'center',
+  marginTop: '24px',
+}));
