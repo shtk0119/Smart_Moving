@@ -68,7 +68,7 @@ const Introduction = styled(Typography)(() => ({
   fontWeight: 'bold',
   marginTop: '8px',
   '@media screen and (max-width:425px)': {
-    fontSize: '12px'
+    fontSize: '10px'
   }
 }));
 
