@@ -17,7 +17,7 @@ const NavigationMenu = () => {
         <Menu />
       </IconButton>
       <Popper open={popOpen} anchorEl={anchorEl}>
-      <Box
+        <Box
           mt={2}
           bgcolor="#fff"
           border={1}
