@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Box, Checkbox, Divider, IconButton, List, ListItem, ListItemText, styled } from '@mui/material';
-import { Add, Delete, FilterList } from '@mui/icons-material';
+import { Box, Checkbox, IconButton, List, ListItem, styled, Typography } from '@mui/material';
+import { Add, Delete } from '@mui/icons-material';
 import { db } from '../../libs/firebase';
 import { useFirebaseAuthContext } from '../../contexts/FirebaseAuthContext';
 import { collection, deleteDoc, doc, getDocs, onSnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
-import AddTaskModal from '../molecules/AddTaskModal';
 import DetailTaskModal from '../molecules/DetailTaskModal';
+import AddTaskModal from '../molecules/AddTaskModal';
 
 const TaskMain = () => {
   const [isAdd, setIsAdd] = React.useState<boolean>(false);
@@ -69,88 +69,58 @@ const TaskMain = () => {
 
   return (
     <MainBox component='main'>
-      <Box m={5}>
-        <Box>
-          <Box display="flex" justifyContent="space-between">
-            <Box>
-              <IconButton onClick={onClickAddTask}>
-                <Add />
-              </IconButton>
-              <IconButton onClick={onClickDeleteTask}>
-                <Delete />
-              </IconButton>
-            </Box>
-            <Box>
-              <IconButton>
-                <FilterList />
-              </IconButton>
-            </Box>
-          </Box>
-          <Box>
-            <List>
-              <ListItem>
-                <Checkbox
-                  checked={tasks?.length === deleteTaskIds.length}
-                  onChange={(e) => isCheckedAllTasks(e)}
-                />
-                <ListItemText>
-                  タイトル
-                </ListItemText>
-                <ListItemText sx={{ minWidth: '250px', maxWidth: '250px' }}>
-                  カテゴリー
-                </ListItemText>
-                <ListItemText sx={{ minWidth: '120px', maxWidth: '120px' }}>
-                  ステータス
-                </ListItemText>
-                <ListItemText sx={{ minWidth: '120px', maxWidth: '120px' }}>
-                  開始日
-                </ListItemText>
-                <ListItemText sx={{ minWidth: '120px', maxWidth: '120px' }}>
-                  終了日
-                </ListItemText>
-              </ListItem>
-              <Divider />
-              {tasks?.map((task: QueryDocumentSnapshot) => {
-                return (
-                  <Box key={task.id}>
-                    <ListItem>
-                      <Checkbox
-                        checked={deleteTaskIds.includes(task.id)}
-                        onChange={(e) => isCheckedTasks(e, task.id)}
-                      />
-                      <ListItemText
-                        sx={{
-                          '& .MuiTypography-body1': {
-                            display: 'inline',
-                            '&:hover': { cursor: 'pointer', opacity: '0.6' },
-                          },
-                        }}
-                        onClick={() => onClickDetailTask(task.id)}
-                      >
-                        {task.data().title}
-                      </ListItemText>
-                      <ListItemText sx={{ minWidth: '250px', maxWidth: '250px' }}>
-                        {task.data().category}
-                      </ListItemText>
-                      <ListItemText sx={{ minWidth: '120px', maxWidth: '120px' }}>
-                        {task.data().status}
-                      </ListItemText>
-                      <ListItemText sx={{ minWidth: '120px', maxWidth: '120px' }}>
-                        {task.data().start_date}
-                      </ListItemText>
-                      <ListItemText sx={{ minWidth: '120px', maxWidth: '120px' }}>
-                        {task.data().end_date}
-                      </ListItemText>
-                    </ListItem>
-                    <Divider />
-                    <DetailTaskModal isDetail={isDetail === task.id} setIsDetail={setIsDetail} task={task} />
-                  </Box>
-                );
-              })}
-            </List>
-          </Box>
-        </Box>
+      <Box display='flex' justifyContent='right'>
+        <IconButton onClick={onClickAddTask}>
+          <Add />
+        </IconButton>
+        <IconButton onClick={onClickDeleteTask}>
+          <Delete />
+        </IconButton>
       </Box>
+
+      <TasksBox>
+        {/* 768px以上 */}
+        <ListBox>
+          <List sx={{ pb: 0 }}>
+            <ListItem sx={{ borderBottom: '1px solid #00000020' }}>
+              <Checkbox checked={tasks?.length === deleteTaskIds.length} onChange={(e) => isCheckedAllTasks(e)} />
+              <ListItemTitle>タイトル</ListItemTitle>
+              <ListItemCategory>カテゴリー</ListItemCategory>
+              <ListItemStatus>ステータス</ListItemStatus>
+              <ListItemStartDate>開始日</ListItemStartDate>
+              <ListItemEndDate>終了日</ListItemEndDate>
+            </ListItem>
+            {tasks?.map((task: QueryDocumentSnapshot, index) => {
+              return (
+                <React.Fragment key={index}>
+                  <ListItemBox onClick={() => onClickDetailTask(task.id)}>
+                    <Checkbox checked={deleteTaskIds.includes(task.id)} onChange={(e) => isCheckedTasks(e, task.id)} onClick={(e) => e.stopPropagation()} />
+                    <ListItemTitle>{task.data().title}</ListItemTitle>
+                    <ListItemCategory>{task.data().category}</ListItemCategory>
+                    <ListItemStatus>{task.data().status}</ListItemStatus>
+                    <ListItemStartDate>{task.data().start_date}</ListItemStartDate>
+                    <ListItemEndDate>{task.data().end_date}</ListItemEndDate>
+                  </ListItemBox>
+                  <DetailTaskModal isDetail={isDetail === task.id} setIsDetail={setIsDetail} task={task} />
+                </React.Fragment>
+              );
+            })}
+          </List>
+        </ListBox>
+        
+        {/* 768px以下 */}
+        {tasks?.map((task: QueryDocumentSnapshot, index) => {
+          return (
+            <React.Fragment key={index}>
+              <TaskBox onClick={() => onClickDetailTask(task.id)}>
+
+              </TaskBox>
+              <DetailTaskModal isDetail={isDetail === task.id} setIsDetail={setIsDetail} task={task} />
+            </React.Fragment>
+          );
+        })}
+      </TasksBox>
+
       <AddTaskModal isAdd={isAdd} setIsAdd={setIsAdd} />
     </MainBox>
   );
@@ -159,5 +129,75 @@ const TaskMain = () => {
 export default TaskMain;
 
 const MainBox = styled(Box)(() => ({
+  padding: '0 36px',
   marginTop: '100px'
+}));
+
+const TasksBox = styled(Box)(() => ({
+  borderRadius: '10px 10px 0 0',
+  boxShadow: '0 0 16px rgba(0,0,0,0.2)',
+  marginTop: '16px',
+  '@media screen and (max-width:768px)': {
+    boxShadow: 'none'
+  }
+}));
+
+const ListBox = styled(Box)(() => ({
+  '@media screen and (max-width:768px)': {
+    display: 'none'
+  }
+}));
+
+const ListItemBox = styled(ListItem)(() => ({
+  backgroundColor: '#fff',
+  cursor: 'pointer',
+  ':hover': {
+    backgroundColor: '#00000014'
+  }
+}));
+
+const ListItemTitle = styled(Typography)(() => ({
+  maxHeight: '36px',
+  width: '25%',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden'
+}));
+
+const ListItemCategory = styled(Typography)(() => ({
+  width: '25%',
+  padding: '0 16px'
+}));
+
+const ListItemStatus = styled(Typography)(() => ({
+  width: '20%',
+  padding: '0 16px'
+}));
+
+const ListItemStartDate = styled(Typography)(() => ({
+  width: '15%',
+  padding: '0 16px',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden'
+}));
+
+const ListItemEndDate = styled(Typography)(() => ({
+  width: '15%',
+  padding: '0 16px',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden'
+}));
+
+const TaskBox = styled(Box)(() => ({
+  display: 'none',
+  height: '200px',
+  backgroundColor: '#fff',
+  borderRadius: '10px',
+  marginTop: '16px',
+  ':hover': {
+    cursor: 'pointer',
+    opacity: '0.6'
+  },
+  '@media screen and (max-width:768px)': {
+    display: 'block',
+  }
 }));
