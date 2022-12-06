@@ -54,7 +54,7 @@ const SignupForm = () => {
   return (
     <FormBox>
       <DefaultFormControl fullWidth>
-       <TextField
+        <TextField
           type='text'
           variant='outlined'
           label='Nickname'
