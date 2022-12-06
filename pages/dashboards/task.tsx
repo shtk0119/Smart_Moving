@@ -1,17 +1,17 @@
-import * as React from 'react';
-import { useFirebaseAuthContext } from '../../src/contexts/FirebaseAuthContext';
-import TaskPage from '../../src/components/templates/TaskPage';
+import Head from 'next/head';
+import TaskTemplate from '../../src/components/templates/TaskTemplate';
 
 const Tasks = () => {
-  const { user } = useFirebaseAuthContext();
-
-  // React.useEffect(() => {
-  //   console.log(user)
-  // }, [user])
-
   return (
-    <TaskPage />
-  )
-}
+    <>
+      <Head>
+        <title>
+          Dashboard - Task
+        </title>
+      </Head>
+      <TaskTemplate />
+    </>
+  );
+};
 
 export default Tasks;

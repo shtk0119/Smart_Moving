@@ -1,19 +1,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import {
-  Avatar,
-  Box,
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Popper,
-  Typography,
-} from '@mui/material';
+import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Popper, Typography } from '@mui/material';
 import { AccountCircle, Logout, Settings } from '@mui/icons-material';
 import { useFirebaseAuthContext } from '../../contexts/FirebaseAuthContext';
 
@@ -34,7 +22,7 @@ const Setting = () => {
 
   return (
     <>
-      <IconButton color="inherit" onClick={handleClick}>
+      <IconButton onClick={handleClick}>
         <AccountCircle />
       </IconButton>
       <Popper open={popOpen} anchorEl={anchorEl}>

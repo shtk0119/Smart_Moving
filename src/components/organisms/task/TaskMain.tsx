@@ -69,7 +69,7 @@ const TaskMain = () => {
 
   return (
     <Box component='main' m='64px auto 32px'>
-      <Box m={5} width='1024px'>
+      <Box m={5}>
         <Box>
           <Box display="flex" justifyContent="space-between">
             <Box>
