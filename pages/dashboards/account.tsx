@@ -1,5 +1,5 @@
-import Head from "next/head";
-import AccountTemplate from "../../src/components/templates/AccountTemplate";
+import Head from 'next/head';
+import AccountTemplate from '../../src/components/templates/AccountTemplate';
 
 const Account = () => {
   return (
