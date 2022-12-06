@@ -5,7 +5,7 @@ import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemButton, ListI
 import { AccountCircle, Logout, Settings } from '@mui/icons-material';
 import { useFirebaseAuthContext } from '../../contexts/FirebaseAuthContext';
 
-const Setting = () => {
+const AccountMenu = () => {
   const { user, logout } = useFirebaseAuthContext();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -72,4 +72,4 @@ const Setting = () => {
   );
 };
 
-export default Setting;
+export default AccountMenu;

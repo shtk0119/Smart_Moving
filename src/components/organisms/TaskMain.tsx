@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Box, Checkbox, Divider, IconButton, List, ListItem, ListItemText } from '@mui/material';
+import { Box, Checkbox, Divider, IconButton, List, ListItem, ListItemText, styled } from '@mui/material';
 import { Add, Delete, FilterList } from '@mui/icons-material';
-import { db } from '../../../libs/firebase';
-import { useFirebaseAuthContext } from '../../../contexts/FirebaseAuthContext';
+import { db } from '../../libs/firebase';
+import { useFirebaseAuthContext } from '../../contexts/FirebaseAuthContext';
 import { collection, deleteDoc, doc, getDocs, onSnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
-import AddTaskModal from '../../molecules/AddTaskModal';
-import DetailTaskModal from '../../molecules/DetailTaskModal';
+import AddTaskModal from '../molecules/AddTaskModal';
+import DetailTaskModal from '../molecules/DetailTaskModal';
 
 const TaskMain = () => {
   const [isAdd, setIsAdd] = React.useState<boolean>(false);
@@ -68,7 +68,7 @@ const TaskMain = () => {
   }, [user]);
 
   return (
-    <Box component='main' m='64px auto 32px'>
+    <MainBox component='main'>
       <Box m={5}>
         <Box>
           <Box display="flex" justifyContent="space-between">
@@ -152,8 +152,12 @@ const TaskMain = () => {
         </Box>
       </Box>
       <AddTaskModal isAdd={isAdd} setIsAdd={setIsAdd} />
-    </Box>
+    </MainBox>
   );
 };
 
 export default TaskMain;
+
+const MainBox = styled(Box)(() => ({
+  marginTop: '100px'
+}));

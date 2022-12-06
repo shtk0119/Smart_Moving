@@ -1,8 +1,16 @@
-import GovernmentPage from '../../src/components/templates/GovernmentPage';
+import Head from "next/head";
+import GovernmentTemplate from "../../src/components/templates/GovernmentTemplate";
 
 const Government = () => {
   return (
-    <GovernmentPage />
+    <>
+      <Head>
+        <title>
+          Dashboard - Government
+        </title>
+      </Head>
+      <GovernmentTemplate />
+    </>
   );
 };
 

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { AppBar, styled, Toolbar } from '@mui/material';
 import NavigationMenu from '../molecules/NavigationMenu';
-import Setting from '../molecules/Setting';
+import AccountMenu from '../molecules/AccountMenu';
 
 const NavigationBar = () => {
   return (
     <NavBox>
       <ToolBar>
         <NavigationMenu />
-        <Setting />
+        <AccountMenu />
       </ToolBar>
     </NavBox>
   );

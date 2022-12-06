@@ -1,8 +1,16 @@
-import AccountPage from '../../src/components/templates/AccountPage';
+import Head from "next/head";
+import AccountTemplate from "../../src/components/templates/AccountTemplate";
 
 const Account = () => {
   return (
-    <AccountPage />
+    <>
+      <Head>
+        <title>
+          Dashboard - Government
+        </title>
+      </Head>
+      <AccountTemplate />
+    </>
   );
 };
 

@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
 import NavigationBar from '../organisms/NavigationBar';
-import TaskMain from '../organisms/task/TaskMain';
+import TaskMain from '../organisms/TaskMain';
 
 const TaskTemplate = () => {
   return (
-    <Box minHeight='100vh'>
+    <Box height='calc(100vh - 100px)'>
       <NavigationBar />
       <TaskMain />
     </Box>

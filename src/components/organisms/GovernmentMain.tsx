@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Box } from '@mui/material';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { LatLng } from 'use-places-autocomplete';
-import PlacesAutocomplete from '../../molecules/gorvernment/PlacesAutocomplete';
+import PlacesAutocomplete from '../molecules/gorvernment/PlacesAutocomplete';
 
 const GovernmentMain = () => {
   const center = React.useMemo(() => ({ lat: 35.681382, lng: 139.766084 }), []);
