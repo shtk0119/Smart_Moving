@@ -13,8 +13,8 @@ const Tasks = () => {
       </Head>
       {/* <NavigationBar /> */}
 
-      <Box bgcolor='#fff' height='100px'></Box>
-      <Box bgcolor='#fff' marginTop={3} height='100px'></Box>
+      <Box bgcolor='#f1f1f1' height='100px'></Box>
+      <Box bgcolor='#f1f1f1' marginTop={3} height='100px'></Box>
     </>
   );
 };
