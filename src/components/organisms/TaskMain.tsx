@@ -117,7 +117,7 @@ const TaskMain = () => {
                 <Typography>{task.data().title}</Typography>
                 <Box display='flex' alignItems='center' justifyContent='space-between'>
                   <Typography>{task.data().start_date + ' 〜 ' + task.data().end_date}</Typography>
-                  <Checkbox onClick={(e) => e.stopPropagation()} />
+                  <Checkbox checked={deleteTaskIds.includes(task.id)} onChange={(e) => isCheckedTasks(e, task.id)} onClick={(e) => e.stopPropagation()} />
                 </Box>
               </TaskBox>
               <DetailTaskModal isDetail={isDetail === task.id} setIsDetail={setIsDetail} task={task} />
