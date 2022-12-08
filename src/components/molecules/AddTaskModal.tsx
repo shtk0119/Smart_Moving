@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box, Button, FormControl, FormLabel, IconButton, Input, InputLabel, MenuItem, Modal, Select, styled, TextField, Typography } from '@mui/material';
-import { ArrowRightAlt, Close } from '@mui/icons-material';
+import { Close } from '@mui/icons-material';
 import { Task } from '../../types/task';
 import { db } from '../../libs/firebase';
 import { useFirebaseAuthContext } from '../../contexts/FirebaseAuthContext';
