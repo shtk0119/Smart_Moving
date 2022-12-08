@@ -1,4 +1,6 @@
+import { Box } from '@mui/material';
 import Head from 'next/head';
+import NavigationBar from '../../src/components/organisms/NavigationBar';
 import TaskTemplate from '../../src/components/templates/TaskTemplate';
 
 const Tasks = () => {
@@ -9,7 +11,10 @@ const Tasks = () => {
           Dashboard - Task
         </title>
       </Head>
-      <TaskTemplate />
+      <NavigationBar />
+
+      <Box bgcolor='#fff' marginTop={8} height='100px'></Box>
+      <Box bgcolor='#fff' marginTop={3} height='100px'></Box>
     </>
   );
 };
