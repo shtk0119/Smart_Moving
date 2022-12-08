@@ -4,7 +4,7 @@ import TaskMain from '../organisms/TaskMain';
 
 const TaskTemplate = () => {
   return (
-    <Box height='calc(100vh - 100px)'>
+    <Box>
       <NavigationBar />
       <TaskMain />
     </Box>
