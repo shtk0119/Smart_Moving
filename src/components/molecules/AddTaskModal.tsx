@@ -143,11 +143,14 @@ const ModalBox = styled(Box)(() => ({
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
+  overflow: 'scroll',
+  height: 600,
   width: 600,
   backgroundColor: '#fff',
   borderRadius: '10px',
   padding: '36px',
   '@media screen and (max-width:768px)': {
+    height: 500,
     width: 400,
     padding: '24px'
   },
