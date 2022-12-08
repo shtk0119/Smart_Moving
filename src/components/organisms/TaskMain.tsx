@@ -134,8 +134,7 @@ const TaskMain = () => {
 export default TaskMain;
 
 const MainBox = styled(Box)(() => ({
-  padding: '0 36px',
-  marginTop: '100px'
+  margin: '100px 36px 0'
 }));
 
 const TasksBox = styled(Box)(() => ({
