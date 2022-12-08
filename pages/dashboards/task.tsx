@@ -11,9 +11,9 @@ const Tasks = () => {
           Dashboard - Task
         </title>
       </Head>
-      <NavigationBar />
+      {/* <NavigationBar /> */}
 
-      <Box bgcolor='#fff' marginTop={8} height='100px'></Box>
+      <Box bgcolor='#fff' height='100px'></Box>
       <Box bgcolor='#fff' marginTop={3} height='100px'></Box>
     </>
   );
