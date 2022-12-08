@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useRouter } from 'next/router';
-import { Avatar, Box, Button, Divider, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { Avatar, Box, Button, Divider, IconButton, InputAdornment, styled, TextField, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useFirebaseAuthContext } from '../../contexts/FirebaseAuthContext';
 import { db } from '../../libs/firebase';
@@ -109,26 +109,22 @@ const AccountMain = () => {
   }, [user]);
 
   return (
-    <Box component='main' m='64px auto 32px'>
-      <Box width='1024px' mt={6}>
-        <Typography variant='h4' fontWeight='bold' mb={2}>Account</Typography>
+    <MainBox component='main'>
+      <Box>
+        <Title variant='h4'>
+          Account
+        </Title>
         <Divider />
-        <Box mt={5}>
-          <Box
-            bgcolor="white"
-            borderRadius={2}
-            p={3}
-            display="flex"
-            justifyContent="space-between"
-          >
-            <Typography variant="h6" fontWeight="bold" width="30%">
+        <AccountBox>
+          <BasicInfomationBox>
+            <SubTitle variant='h6'>
               基本情報
-            </Typography>
-            <Box width="70%">
-              <Box display="flex">
+            </SubTitle>
+
+            <ParentBox>
+              <Box display="flex" marginTop='16px'>
                 <Avatar />
               </Box>
-
               <Box mt={5}>
                 <TextField
                   type='text'
@@ -141,12 +137,9 @@ const AccountMain = () => {
                   value={editUserData?.nickname}
                   onChange={(e) => setEditUserData({ ...editUserData, nickname: e.target.value })}
                 />
-                <Button 
-                  sx={{ ml: 3 }}
-                  onClick={onClickUpdateNickname}
-                >
+                <SaveButton onClick={onClickUpdateNickname}>
                   保存
-                </Button>
+                </SaveButton>
               </Box>
               <Box mt={5}>
                 <TextField
@@ -160,27 +153,18 @@ const AccountMain = () => {
                   value={editUserData?.email}
                   onChange={(e) => setEditUserData({ ...editUserData, email: e.target.value })}
                 />
-                <Button 
-                  sx={{ ml: 3 }}
-                  onClick={onClickUpdateEmail}
-                >
+                <SaveButton onClick={onClickUpdateEmail}>
                   保存
-                </Button>
+                </SaveButton>
               </Box>
-            </Box>
-          </Box>
-          <Box
-            bgcolor="white"
-            borderRadius={2}
-            p={3}
-            mt={5}
-            display="flex"
-            justifyContent="space-between"
-          >
-            <Typography variant="h6" fontWeight="bold" width="30%">
+            </ParentBox>
+          </BasicInfomationBox>
+
+          <PasswordBox>
+            <SubTitle variant='h6'>
               パスワード変更
-            </Typography>
-            <Box width="70%">
+            </SubTitle>
+            <ParentBox>
               <Box mt={5}>
                 <TextField
                   type={isShowPassword ? 'text' : 'password'}
@@ -202,48 +186,115 @@ const AccountMain = () => {
                   value={editUserData?.password}
                   onChange={(e) => setEditUserData({ ...editUserData, password: e.target.value })}
                 />
-                <Button 
-                  sx={{ ml: 3 }}
-                  onClick={onClickUpdatePassword}
-                >
+                <SaveButton onClick={onClickUpdatePassword}>
                   保存
-                </Button>
+                </SaveButton>
               </Box>
-            </Box>
-          </Box>
-
-          <Box mt={5}>
-            <Box
-              bgcolor="white"
-              borderRadius={2}
-              p={3}
-              display="flex"
-              justifyContent="space-between"
-            >
-              <Typography variant="h6" fontWeight="bold" width="30%">
-                アカウント削除
-              </Typography>
-              <Box width="70%">
-                <Box>
-                  <Typography fontWeight="bold">
-                    アカウントとアカウントに関係するすべてのデータを削除します。
-                  </Typography>
-                  <Button
-                    sx={{ mt: 3, fontWeight: 'bold' }}
-                    variant="outlined"
-                    color="error"
-                    onClick={onClickAccountDelete}
-                  >
-                    アカウント削除
-                  </Button>
-                </Box>
+            </ParentBox>
+          </PasswordBox>
+          
+          <AccountDeleteBox>
+            <SubTitle variant='h6'>
+              アカウント削除
+            </SubTitle>
+            <ParentBox>
+              <Box textAlign='center'>
+                <Description textAlign='left'>
+                  アカウントとアカウントに関係するすべてのデータを削除します。
+                </Description>
+                <DeleteButton variant='outlined' color='error' onClick={onClickAccountDelete}>
+                  アカウント削除
+                </DeleteButton>
               </Box>
-            </Box>
-          </Box>
-        </Box>
+            </ParentBox>
+          </AccountDeleteBox>
+        </AccountBox>
       </Box>
-    </Box>
+    </MainBox>
   );
 };
 
 export default AccountMain;
+
+const MainBox = styled(Box)(() => ({
+  width: '768px',
+  padding: '0 36px',
+  margin: '100px auto 0',
+  '@media screen and (max-width:768px)': {
+    width: '425px'
+  }
+}));
+
+const Title = styled(Typography)(() => ({
+  fontWeight: 'bold'
+}));
+
+const SubTitle = styled(Typography)(() => ({
+  fontWeight: 'bold',
+}));
+
+const AccountBox = styled(Box)(() => ({
+  marginTop: '36px'
+}));
+
+const BasicInfomationBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  backgroundColor: '#fff',
+  borderRadius: '10px',
+  padding: '16px',
+  '@media screen and (max-width:768px)': {
+    display: 'block',
+  }
+}));
+
+const PasswordBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  backgroundColor: '#fff',
+  borderRadius: '10px',
+  padding: '16px',
+  marginTop: '36px',
+  '@media screen and (max-width:768px)': {
+    display: 'block',
+  }
+}));
+
+const AccountDeleteBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  backgroundColor: '#fff',
+  borderRadius: '10px',
+  padding: '16px',
+  marginTop: '36px',
+  '@media screen and (max-width:768px)': {
+    display: 'block',
+  }
+}));
+
+const ParentBox = styled(Box)(() => ({
+  width: '70%',
+  '@media screen and (max-width:768px)': {
+    width: '100%'
+  }
+}));
+
+const Description = styled(Typography)(() => ({
+  fontWeight: 'bold',
+  '@media screen and (max-width:768px)': {
+    fontSize: '12px',
+    marginTop: '16px'
+  }
+}));
+
+const SaveButton = styled(Button)(() => ({
+  marginLeft: '16px'
+}));
+
+const DeleteButton = styled(Button)(() => ({
+  fontWeight: 'bold',
+  marginTop: '16px',
+  '@media screen and (max-width:768px)': {
+    marginTop: '8px'
+  }
+}));
