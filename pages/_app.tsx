@@ -28,13 +28,12 @@ const App = ({ Component, pageProps }: AppProps) => {
     <>
       {isLoading && <BarLoader height={3} width={'100%'} color={'#36d7b7'} />}
       <FirebaseAuthContextProvider>
-        <ThemeProvider theme={theme}>
-          <Head>
-            <title>Smart Moving</title>
-          </Head>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>Smart Moving</title>
+        </Head>
+        <CssBaseline />
+        <Component {...pageProps} />
       </FirebaseAuthContextProvider>
     </>
   );
