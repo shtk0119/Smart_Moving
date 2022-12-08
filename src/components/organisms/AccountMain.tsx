@@ -219,7 +219,7 @@ export default AccountMain;
 const MainBox = styled(Box)(() => ({
   width: '768px',
   padding: '0 36px',
-  margin: '100px auto 0',
+  margin: '100px auto 24px',
   '@media screen and (max-width:768px)': {
     width: '425px'
   }
@@ -240,7 +240,8 @@ const AccountBox = styled(Box)(() => ({
 const BasicInfomationBox = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'space-between',
-  backgroundColor: '#fff',
+  backgroundColor: '#f1f1f1',
+  boxShadow: '0 0 16px rgba(0,0,0,0.2)',
   borderRadius: '10px',
   padding: '16px',
   '@media screen and (max-width:768px)': {
@@ -251,7 +252,8 @@ const BasicInfomationBox = styled(Box)(() => ({
 const PasswordBox = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'space-between',
-  backgroundColor: '#fff',
+  backgroundColor: '#f1f1f1',
+  boxShadow: '0 0 16px rgba(0,0,0,0.2)',
   borderRadius: '10px',
   padding: '16px',
   marginTop: '36px',
@@ -263,7 +265,8 @@ const PasswordBox = styled(Box)(() => ({
 const AccountDeleteBox = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'space-between',
-  backgroundColor: '#fff',
+  backgroundColor: '#f1f1f1',
+  boxShadow: '0 0 16px rgba(0,0,0,0.2)',
   borderRadius: '10px',
   padding: '16px',
   marginTop: '36px',

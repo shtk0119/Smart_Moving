@@ -2,13 +2,12 @@ import * as React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import type { AppProps } from 'next/app';
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { BarLoader } from 'react-spinners';
 import { FirebaseAuthContextProvider } from '../src/contexts/FirebaseAuthContext';
 import '../styles/globals.css';
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const theme = createTheme();
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 

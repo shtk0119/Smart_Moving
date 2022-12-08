@@ -197,6 +197,7 @@ const TaskBox = styled(Box)(() => ({
   '@media screen and (max-width:768px)': {
     display: 'block',
     backgroundColor: '#fff',
+    boxShadow: '0 0 16px rgba(0,0,0,0.2)',
     border: '1px solid #00000030',
     borderRadius: '10px',
     padding: '16px',
