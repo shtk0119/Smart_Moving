@@ -194,15 +194,15 @@ const ListItemEndDate = styled(Typography)(() => ({
 
 const TaskBox = styled(Box)(() => ({
   display: 'none',
-  backgroundColor: '#fff',
-  borderRadius: '10px',
-  padding: '16px',
-  marginTop: '24px',
   ':hover': {
     cursor: 'pointer',
     opacity: '0.6'
   },
   '@media screen and (max-width:768px)': {
     display: 'block',
+    backgroundColor: '#fff',
+    borderRadius: '10px',
+    padding: '16px',
+    marginTop: '24px',
   }
 }));
