@@ -30,9 +30,9 @@ const AddTaskModal = ({ isAdd, setIsAdd }: Props) => {
     setIsAdd(!isAdd);
   };
 
-  const onClickTaskSave = () => {
+  const onClickTaskSave = async () => {
     if (user) {
-      addDoc(collection(db, 'users', user.uid, 'tasks'), {
+      await addDoc(collection(db, 'users', user.uid, 'tasks'), {
         title: task.title,
         category: task.category,
         status: task.status,
@@ -206,6 +206,9 @@ const SaveButton = styled(Button)(() => ({
   display: 'block',
   marginTop: '36px',
   marginLeft: 'auto',
+  ':hover': {
+    opacity: '0.6'
+  },
   '@media screen and (max-width:768px)': {
     marginTop: '24px',
   }
