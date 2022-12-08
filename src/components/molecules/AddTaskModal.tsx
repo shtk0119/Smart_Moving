@@ -99,7 +99,6 @@ const AddTaskModal = ({ isAdd, setIsAdd }: Props) => {
               <InputLabel shrink>開始日</InputLabel>
               <Input
                 type="date"
-                fullWidth
                 onChange={(e) =>
                   setTask({ ...task, start_date: e.target.value })
                 }
@@ -110,7 +109,6 @@ const AddTaskModal = ({ isAdd, setIsAdd }: Props) => {
               <InputLabel shrink>終了日</InputLabel>
               <Input
                 type="date"
-                fullWidth
                 onChange={(e) =>
                   setTask({ ...task, end_date: e.target.value })
                 }
