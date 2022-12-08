@@ -113,7 +113,12 @@ const TaskMain = () => {
           return (
             <React.Fragment key={index}>
               <TaskBox onClick={() => onClickDetailTask(task.id)}>
-
+                <Typography>{task.data().status}</Typography>
+                <Typography>{task.data().title}</Typography>
+                <Box display='flex' alignItems='center' justifyContent='space-between'>
+                  <Typography>{task.data().start_date + ' 〜 ' + task.data().end_date}</Typography>
+                  <Checkbox onClick={(e) => e.stopPropagation()} />
+                </Box>
               </TaskBox>
               <DetailTaskModal isDetail={isDetail === task.id} setIsDetail={setIsDetail} task={task} />
             </React.Fragment>
@@ -160,7 +165,7 @@ const ListItemTitle = styled(Typography)(() => ({
   maxHeight: '36px',
   width: '25%',
   whiteSpace: 'nowrap',
-  overflow: 'hidden'
+  overflow: 'hidden',
 }));
 
 const ListItemCategory = styled(Typography)(() => ({
@@ -170,7 +175,7 @@ const ListItemCategory = styled(Typography)(() => ({
 
 const ListItemStatus = styled(Typography)(() => ({
   width: '20%',
-  padding: '0 16px'
+  padding: '0 16px',
 }));
 
 const ListItemStartDate = styled(Typography)(() => ({
@@ -189,10 +194,10 @@ const ListItemEndDate = styled(Typography)(() => ({
 
 const TaskBox = styled(Box)(() => ({
   display: 'none',
-  height: '200px',
   backgroundColor: '#fff',
   borderRadius: '10px',
-  marginTop: '16px',
+  padding: '16px',
+  marginTop: '24px',
   ':hover': {
     cursor: 'pointer',
     opacity: '0.6'
